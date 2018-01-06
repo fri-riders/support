@@ -1,0 +1,53 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:10.0
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rsoproject
+  support:
+    build: .
+    ports:
+      - 8088:8088
+    environment:
+      KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/rsoproject
+      KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_SERVER_BASEURL: http://support:8088
+    depends_on:
+      - etcd
+      - postgres
+      - notifications
+  notifications:
+    image: janerz6/notifications:0.4
+    ports:
+      - 8081:8081
+    environment:
+      CONFIG_SERVER_URL: http://consul:8500
+    depends_on:
+      - consul
+  consul:
+    image: consul
+    ports:
+      - 8400:8400
+      - 8500:8500
+      - 8600:8600
+  etcd:
+    image: elcolio/etcd:2.0.10
+    ports:
+      - 2379:2379
+      - 2380:2380
+      - 4001:4001
+      - 7001:7001
+  etcd-browser:
+    image: buddho/etcd-browser
+    ports:
+      - 8000:8000
+    environment:
+      ETCD_HOST: http://etcd
+      AUTH_PASS: doe
+    depends_on:
+      - etcd
