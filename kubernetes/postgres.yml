@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-support
+spec:
+  ports:
+  - name: pgql
+    port: 5432
+    targetPort: 54321
+    protocol: TCP
+  selector:
+    app: postgres-support
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: postgres-support
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-support
+    spec:
+      containers:
+        - name: postgres-support
+          image: postgres:10.0
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: rsosupport
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - containerPort: 54321
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pg-data
+      volumes:
+        - name: pg-data
+          emptyDir: {}
