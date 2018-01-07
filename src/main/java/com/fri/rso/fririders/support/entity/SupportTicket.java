@@ -26,13 +26,13 @@ public class SupportTicket implements Serializable {
     @Column(name = "subject")
     private String subject;
 
-    @Column(name = "message", length = 750)
+    @Column(name = "msg")
     private String message;
 
-    @Column(name = "is_mail_sent_to_user", columnDefinition = "FALSE")
+    @Column(name = "is_mail_sent_to_user")
     private boolean isMailSentToUser;
 
-    @Column(name = "is_mail_sent_to_admin", columnDefinition = "FALSE")
+    @Column(name = "is_mail_sent_to_admin")
     private boolean isMailSentToAdmin;
 
     @Column(name = "created_at", nullable = false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

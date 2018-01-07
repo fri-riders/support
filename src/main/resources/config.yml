@@ -75,10 +75,10 @@ kumuluzee:
     config:
       watch-enabled: true
       watch-properties: timeout.value,circuit-breaker.failure-ratio,bulkhead.value
-    payments:
+    support:
       bulkhead:
         value: 5
-      http-auth-verify-jwt:
+      http-notifications-send:
         timeout:
           value: 5000ms
         circuit-breaker:
@@ -101,6 +101,6 @@ kumuluzee:
               size: 5s
               buckets: 5
 
-
 support-config:
+  admin-email: ts4293@student.uni-lj.si
   healthy: true

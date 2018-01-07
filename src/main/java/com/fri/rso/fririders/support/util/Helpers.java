@@ -44,13 +44,18 @@ public class Helpers {
                 " }";
     }
 
+
     /**
-     * @param email Message to send
+     * @param recipient
+     * @param subject
+     * @param message
      * @return JSON object with message
      */
-    public static String buildIssueJwtJson(String email) {
+    public static String buildNotificationsJson(String recipient, String subject, String message) {
         return "{ " +
-                "\"email\": \"" + email + "\"" +
+                    "\"recipient\": \"" + recipient + "\"," +
+                    "\"subject\": \"" + subject + "\"," +
+                    "\"message\": \"" + message + "\"" +
                 " }";
     }
 

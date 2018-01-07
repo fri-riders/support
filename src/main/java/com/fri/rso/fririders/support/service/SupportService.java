@@ -45,7 +45,28 @@ public class SupportService {
     public SupportTicket createSupportTicket(SupportTicket supportTicket) {
         try {
             beginTransaction();
+            supportTicket.setMailSentToUser(false);
+            supportTicket.setMailSentToAdmin(false);
             entityManager.persist(supportTicket);
+            commitTransaction();
+
+            return supportTicket;
+        } catch (Exception e) {
+            rollbackTransaction();
+
+            log.error(e.getMessage());
+
+            return null;
+        }
+    }
+
+    @Transactional
+    @Counted(name = "update_support_ticket_counter")
+    public SupportTicket updateSupportTicket(SupportTicket supportTicket) {
+        try {
+            beginTransaction();
+            entityManager.merge(supportTicket);
+            entityManager.flush();
             commitTransaction();
 
             return supportTicket;

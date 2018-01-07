@@ -12,14 +12,11 @@ public class ConfigurationEventHandler {
     private static final Logger log = Logger.getLogger(ConfigurationEventHandler.class.getName());
 
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
+        String adminEmailConfigProperty = "support-config.admin-email";
 
-        ConfigurationUtil.getInstance().subscribe("support-config.healthy", (String key, String value) -> {
-            if ("support-config.healthy".equals(key)) {
-                if ("true".equals(value.toLowerCase())) {
-                    log.info("Support service IS healthy.");
-                } else {
-                    log.info("Support service is NOT healthy.");
-                }
+        ConfigurationUtil.getInstance().subscribe(adminEmailConfigProperty, (String key, String value) -> {
+            if (adminEmailConfigProperty.equals(key)) {
+                log.info("Admin email is now " + value);
             }
         });
     }
