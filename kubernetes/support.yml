@@ -10,7 +10,7 @@ spec:
         app: support
     spec:
       containers:
-      - image: tomisebjanic/rso-support:1.0
+      - image: tomisebjanic/rso-support:1.0.4
         name: support
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
@@ -20,7 +20,7 @@ spec:
           - name: KUMULUZEE_CONFIG_ETCD_HOSTS
             value: http://etcd:2379
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-            value: jdbc:postgresql://postgres-support:54321/rsosupport
+            value: jdbc:postgresql://postgres:5432/rsousers
           - name: KUMULUZEE_SERVER_BASEURL
             value: http://support:8088
         livenessProbe:
@@ -42,9 +42,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: payments
+  name: support
   labels:
-    app: payments
+    app: support
 spec:
   type: NodePort
   ports:
@@ -53,7 +53,7 @@ spec:
     protocol: TCP
     targetPort: 8088
   selector:
-    app: payments
+    app: support
 
 ---
 
