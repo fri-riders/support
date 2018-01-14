@@ -2,13 +2,11 @@ package com.fri.rso.fririders.support.service;
 
 import com.fri.rso.fririders.support.util.Helpers;
 import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
+import com.kumuluz.ee.fault.tolerance.annotations.GroupKey;
 import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
-import org.eclipse.microprofile.faulttolerance.Asynchronous;
-import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
-import org.eclipse.microprofile.faulttolerance.Fallback;
-import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.faulttolerance.*;
 
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.client.Client;
@@ -21,6 +19,8 @@ import java.time.temporal.ChronoUnit;
 
 @RequestScoped
 @Log
+@Bulkhead
+@GroupKey("support")
 public class NotificationService {
 
     private static final Logger log = LogManager.getLogger(NotificationService.class.getName());

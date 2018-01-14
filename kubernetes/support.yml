@@ -10,7 +10,7 @@ spec:
         app: support
     spec:
       containers:
-      - image: tomisebjanic/rso-support:1.0.4
+      - image: tomisebjanic/rso-support:1.0.5
         name: support
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
